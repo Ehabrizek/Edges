@@ -45,7 +45,8 @@
             <DockPanel Margin="100,15, 100, 2">
                 <Button MinHeight="20" Content="Process"
                         Command="{Binding ProcessButton_Click}"
-                        IsEnabled="{Binding IsDisabled, Converter={StaticResource InverseBooleanConverter}}"/>
+                        IsEnabled="{Binding IsDisabled, Converter={StaticResource InverseBooleanConverter}}"
+                        IsDefault="true"/>
             </DockPanel>
             <DockPanel Margin="10,15">
                 <ProgressBar MinHeight="20"
@@ -54,6 +55,5 @@
                      Visibility="{Binding ProgressBarVisible, Converter={StaticResource BoolToVis}}"/>
             </DockPanel>
         </StackPanel>
-        
     </Grid>
 </Window>
