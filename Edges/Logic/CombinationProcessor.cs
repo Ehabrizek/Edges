@@ -41,7 +41,7 @@ namespace Edges.Logic
                 listOLists.Add(combination);
             }
 
-            using (StreamWriter writer = new StreamWriter(Path.Combine(Environment.CurrentDirectory, $"Edges Processed on {_now}.txt"), true))
+            using (StreamWriter writer = new StreamWriter(Path.Combine(Environment.CurrentDirectory, $"Edges Processed on {_now}.csv"), true))
             {
                 for (int i = 0; i < listOLists.Count; i++)
                 {
