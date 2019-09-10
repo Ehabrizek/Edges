@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Edges"
         mc:Ignorable="d"
-        Title="Edges" Height="350" Width="500">
+        Title="Edges" Height="400" Width="500">
     
     <Grid>
         <Grid.Resources>
@@ -29,7 +29,7 @@
                          IsEnabled="{Binding IsDisabled, Converter={StaticResource InverseBooleanConverter}}"/>
             </DockPanel>
             <DockPanel Margin="4,4">
-                <TextBlock Text="Enter the header of the Gene Id column:"/>
+                <TextBlock Text="Enter the header of the Gene or Gene Id column:"/>
             </DockPanel>
             <DockPanel Margin="4,4">
                 <TextBox Text="{Binding GeneIdHeader}"
@@ -40,6 +40,13 @@
             </DockPanel>
             <DockPanel Margin="4,4">
                 <TextBox Text="{Binding PathwayDescriptionHeader}"
+                         IsEnabled="{Binding IsDisabled, Converter={StaticResource InverseBooleanConverter}}"/>
+            </DockPanel>
+            <DockPanel Margin="4,4">
+                <TextBlock Text="Enter the header of the Pathway KEGG ID column:"/>
+            </DockPanel>
+            <DockPanel Margin="4,4">
+                <TextBox Text="{Binding PathwayKEGGId}"
                          IsEnabled="{Binding IsDisabled, Converter={StaticResource InverseBooleanConverter}}"/>
             </DockPanel>
             <DockPanel Margin="100,15, 100, 2">

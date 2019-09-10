@@ -17,6 +17,7 @@ namespace Edges.View_Model
         string _sheetName = "By Pathway";
         string _geneIdHeader = "Gene Id";
         string _pathwayDescriptionHeader = "Pathway Description";
+        string _pathwayKEGGId = "Pathway KEGG ID";
         bool _isDisabled = false;
         private long _progressBarMaximum = 100;
         private long _progressBarValue = 0;
@@ -31,6 +32,8 @@ namespace Edges.View_Model
         public string GeneIdHeader { get { return _geneIdHeader; } set { _geneIdHeader = value; OnPropertyChanged(); } }
 
         public string PathwayDescriptionHeader { get { return _pathwayDescriptionHeader; } set { _pathwayDescriptionHeader = value; OnPropertyChanged(); } }
+
+        public string PathwayKEGGId { get { return _pathwayKEGGId; } set { _pathwayKEGGId = value; OnPropertyChanged(); } }
 
         public bool IsDisabled { get { return _isDisabled; } set { _isDisabled = value; OnPropertyChanged(); } }
 
@@ -56,7 +59,7 @@ namespace Edges.View_Model
         async void Process()
         {
             if (string.IsNullOrWhiteSpace(ExcelFilePath) || string.IsNullOrWhiteSpace(SheetName) || string.IsNullOrWhiteSpace(GeneIdHeader)
-                || string.IsNullOrWhiteSpace(PathwayDescriptionHeader))
+                || string.IsNullOrWhiteSpace(PathwayDescriptionHeader) || string.IsNullOrWhiteSpace(PathwayKEGGId))
             {
                 MessageBox.Show("Please make sure all fields are filled out!");
                 return;
@@ -74,7 +77,7 @@ namespace Edges.View_Model
             try
             {
                 CombinationProcessor processor = new CombinationProcessor();
-                await Task.Run(() => processor.WriteCombinations(ExcelFilePath, SheetName, GeneIdHeader, PathwayDescriptionHeader, IncrementProgressBar, SetProgressBarMax));
+                await Task.Run(() => processor.WriteCombinations(ExcelFilePath, SheetName, GeneIdHeader, PathwayDescriptionHeader, PathwayKEGGId, IncrementProgressBar, SetProgressBarMax));
                 MessageBox.Show("Processing complete! The generated text file can be found where this program is located.");
             }
             catch (OleDbException e)

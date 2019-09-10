@@ -11,26 +11,28 @@ namespace Edges.Logic
         string _now = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
 
         #region Public Methods
-        public void WriteCombinations(string fullPathToExcel, string sheetName, string geneHeader, string pathwayHeader, Action incrementProgressBar, Action<long> setProgressBarMax)
+        public void WriteCombinations(string fullPathToExcel, string sheetName, string geneHeader, string pathwayHeader, string keggId, Action incrementProgressBar, Action<long> setProgressBarMax)
         {
             string conn = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={fullPathToExcel};Extended Properties='Excel 12.0;HDR=yes'";
 
             DataTable pathwaysTable = GetDataTable($"SELECT [{pathwayHeader}] FROM [{sheetName}$];", conn);
-            DataTable distinctPathwaysTable = GetDataTable($"SELECT distinct [{pathwayHeader}] FROM [{sheetName}$];", conn);
+            DataTable distinctPathwaysTable = GetDataTable($"SELECT distinct [{pathwayHeader}] FROM [{sheetName}$] ORDER BY [{pathwayHeader}];", conn);
             DataTable geneIdsTable = GetDataTable($"SELECT [{geneHeader}] FROM [{sheetName}$];", conn);
+            DataTable distinctKeggIdTable = GetDataTable($"SELECT distinct [{keggId}], [{pathwayHeader}] from [{sheetName}$] ORDER BY [{pathwayHeader}] ;", conn);
 
-            List<List<long>> listOLists = new List<List<long>>();
+            List<List<string>> listOLists = new List<List<string>>();
 
             List<string> pathways = convertToStringList(pathwaysTable.Rows);
             List<string> distinctPathways = convertToStringList(distinctPathwaysTable.Rows);
-            List<long> geneIds = convertTolongList(geneIdsTable.Rows);
+            List<string> geneIds = convertToStringList(geneIdsTable.Rows);
+            List<string> distinctKeggIds = convertToStringList(distinctKeggIdTable.Rows);
 
             setProgressBarMax(distinctPathways.Count);
 
             foreach (string distinctPathway in distinctPathways)
             {
                 //Create 1 list per grouping of the same pathways.
-                List<long> combination = new List<long>();
+                List<string> combination = new List<string>();
                 for (int i = 0; i < geneIds.Count; i++)
                 {
                     if (pathways[i] == distinctPathway)
@@ -45,10 +47,10 @@ namespace Edges.Logic
             {
                 for (int i = 0; i < listOLists.Count; i++)
                 {
-                    long[] arr = listOLists[i].ToArray();
+                    string[] arr = listOLists[i].ToArray();
                     long r = 2;
                     long n = arr.Length;
-                    prlongCombination(arr, n, r, distinctPathways[i], writer);
+                    prlongCombination(arr, n, r, distinctPathways[i], distinctKeggIds[i], writer);
                     incrementProgressBar();
                 }
             }
@@ -56,14 +58,14 @@ namespace Edges.Logic
         #endregion
 
         #region Private Methods
-        void prlongCombination(long[] arr, long n, long r, string pathWayName, StreamWriter writer)
+        void prlongCombination(string[] arr, long n, long r, string pathWayName, string keggId, StreamWriter writer)
         {
-            long[] data = new long[r];
+            string[] data = new string[r];
 
-            combinationUtilRecursive(arr, data, 0, n - 1, 0, r, pathWayName, writer);
+            combinationUtilRecursive(arr, data, 0, n - 1, 0, r, pathWayName, keggId, writer);
         }
 
-        void combinationUtilRecursive(long[] arr, long[] data, long start, long end, long index, long r, string pathWayName, StreamWriter writer)
+        void combinationUtilRecursive(string[] arr, string[] data, long start, long end, long index, long r, string pathWayName, string keggId, StreamWriter writer)
         {
             if (index == r)
             {
@@ -71,7 +73,8 @@ namespace Edges.Logic
                 {
                     writer.Write(data[j] + "," + " ");
                 }
-                writer.Write(pathWayName);
+                writer.Write(pathWayName + "," + " ");
+                writer.Write(keggId);
                 writer.WriteLine("");
                 return;
             }
@@ -79,7 +82,7 @@ namespace Edges.Logic
             for (long i = start; i <= end && end - i + 1 >= r - index; i++)
             {
                 data[index] = arr[i];
-                combinationUtilRecursive(arr, data, i + 1, end, index + 1, r, pathWayName, writer);
+                combinationUtilRecursive(arr, data, i + 1, end, index + 1, r, pathWayName, keggId, writer);
             }
         }
 
