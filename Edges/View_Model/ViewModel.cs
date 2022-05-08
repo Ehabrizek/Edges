@@ -14,10 +14,10 @@ namespace Edges.View_Model
     {
         #region Private Members
         string _excelFilePath = @"C:\Folder\Subfolder\ExcelFile.xls";
-        string _sheetName = "By Pathway";
-        string _geneIdHeader = "Gene Id";
+        string _sheetName = "Sheet1";
+        string _geneIdHeader = "Protein Name";
         string _pathwayDescriptionHeader = "Pathway Description";
-        string _pathwayKEGGId = "Pathway KEGG ID";
+        string _pathwayKEGGId = "Pathway Id";
         bool _isDisabled = false;
         private long _progressBarMaximum = 100;
         private long _progressBarValue = 0;

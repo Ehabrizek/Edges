@@ -36,7 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>dna-47669.ico</ApplicationIcon>
+    <ApplicationIcon>DNA_75035.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <PlatformTarget>x64</PlatformTarget>
@@ -123,7 +123,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="dna-47669.ico" />
+    <Resource Include="DNA_75035.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
