@@ -29,7 +29,7 @@
                          IsEnabled="{Binding IsDisabled, Converter={StaticResource InverseBooleanConverter}}"/>
             </DockPanel>
             <DockPanel Margin="4,4">
-                <TextBlock Text="Enter the header of the Gene or Gene Id column:"/>
+                <TextBlock Text="Enter the header of the Protein Name column:"/>
             </DockPanel>
             <DockPanel Margin="4,4">
                 <TextBox Text="{Binding GeneIdHeader}"
@@ -43,7 +43,7 @@
                          IsEnabled="{Binding IsDisabled, Converter={StaticResource InverseBooleanConverter}}"/>
             </DockPanel>
             <DockPanel Margin="4,4">
-                <TextBlock Text="Enter the header of the Pathway KEGG ID column:"/>
+                <TextBlock Text="Enter the header of the Pathway Id column:"/>
             </DockPanel>
             <DockPanel Margin="4,4">
                 <TextBox Text="{Binding PathwayKEGGId}"
